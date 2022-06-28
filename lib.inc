@@ -1,5 +1,6 @@
 section .data
 digits: db '0123456789'
+minus: db '-'
 
 section .text
 strlen:
@@ -23,8 +24,16 @@ print_char:
     syscall
     ret
 
-print_int:
+print_signed_int:
     mov rax, rdi
+    cmp rax, 0
+    jge setup
+    mov rdi, minus
+    push rax
+    call print_char
+    pop rax
+    neg rax
+setup:
     mov rbx, 10
     mov rcx, 0
 print_int_loop:

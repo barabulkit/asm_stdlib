@@ -7,8 +7,8 @@ section .text
 global _start
 _start:
 
-mov rdi, 102
-call print_int
+mov rdi, -102
+call print_signed_int
 
 mov rdi, simple_str
 call print_char
