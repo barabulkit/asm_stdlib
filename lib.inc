@@ -1,6 +1,7 @@
 section .data
 digits: db '0123456789'
 minus: db '-'
+newline: db 0xA
 
 section .text
 strlen:
@@ -22,6 +23,11 @@ print_char:
     mov rdi, 1
     mov rdx, 1
     syscall
+    ret
+
+print_newline:
+    mov rdi, newline
+    call print_char
     ret
 
 print_signed_int:
