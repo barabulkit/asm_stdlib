@@ -2,6 +2,7 @@ section .data
 digits: db '0123456789'
 minus: db '-'
 newline: db 0xA
+buffer: db ' '
 
 section .text
 strlen:
@@ -18,7 +19,7 @@ end:
     ret
 
 print_char:
-    lea rsi, [rdi]
+    mov rsi, rdi
     mov rax, 1
     mov rdi, 1
     mov rdx, 1
@@ -27,25 +28,15 @@ print_char:
 
 print_string:
     call strlen
-    mov rcx, 0
-print_string_loop:
-    cmp rcx, rax
-    je loop_end
-    push rdi
-    push rcx
-    push rax
-    add rdi, rcx
-    call print_char
-    pop rax
-    pop rcx
-    pop rdi
-    inc rcx
-    jmp print_string_loop
-loop_end:
+    mov rdx, rax
+    mov rax, 1
+    lea rsi, [rdi]
+    mov rdi, 1
+    syscall
     ret
 
 print_newline:
-    mov rdi, newline
+    lea rdi, [newline]
     call print_char
     ret
 
@@ -53,7 +44,7 @@ print_signed_int:
     mov rax, rdi
     cmp rax, 0
     jge print
-    mov rdi, minus
+    lea rdi, [minus]
     push rax
     call print_char
     pop rax
@@ -83,6 +74,15 @@ print_loop:
     dec rcx
     test rcx, rcx
     jnz print_loop
+    ret
+
+read_char:
+    mov rax, 0
+    mov rdi, 0
+    mov rsi, buffer
+    mov rdx, 1
+    syscall
+    lea rax, [buffer]
     ret
 
 exit:

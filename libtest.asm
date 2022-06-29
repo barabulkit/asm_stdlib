@@ -30,5 +30,10 @@ mov rdi, simple_str
 call print_string
 call print_newline
 
+call read_char
+mov rdi, rax
+call print_char
+call print_newline
+
 mov rdi, 0
 call exit
