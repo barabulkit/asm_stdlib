@@ -27,13 +27,19 @@ print_char:
 print_signed_int:
     mov rax, rdi
     cmp rax, 0
-    jge setup
+    jge print
     mov rdi, minus
     push rax
     call print_char
     pop rax
     neg rax
-setup:
+    mov rdi, rax
+print:
+    call print_unsigned_int
+    ret
+
+print_unsigned_int:
+    mov rax, rdi
     mov rbx, 10
     mov rcx, 0
 print_int_loop:

@@ -7,6 +7,9 @@ section .text
 global _start
 _start:
 
+mov rdi, 102
+call print_unsigned_int
+
 mov rdi, -102
 call print_signed_int
 
