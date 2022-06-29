@@ -25,6 +25,25 @@ print_char:
     syscall
     ret
 
+print_string:
+    call strlen
+    mov rcx, 0
+print_string_loop:
+    cmp rcx, rax
+    je loop_end
+    push rdi
+    push rcx
+    push rax
+    add rdi, rcx
+    call print_char
+    pop rax
+    pop rcx
+    pop rdi
+    inc rcx
+    jmp print_string_loop
+loop_end:
+    ret
+
 print_newline:
     mov rdi, newline
     call print_char
