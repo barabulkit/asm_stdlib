@@ -1,5 +1,5 @@
 section .data
-simple_str: db 'abcd', 0
+simple_str: db 'abcdefg', 0
 
 section .text
 %include "lib.inc"
@@ -17,6 +17,13 @@ call print_newline
 
 mov rdi, simple_str
 call print_char
+call print_newline
+
+mov rdi, simple_str
+call strlen
+
+mov rdi, rax
+call print_unsigned_int
 call print_newline
 
 mov rdi, 0

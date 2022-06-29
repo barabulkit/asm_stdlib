@@ -8,8 +8,8 @@ strlen:
     mov rax, rdi
     mov rcx, 0
 loop:
-    mov rdx, [rax + rcx]
-    test rdx, rdx
+    mov dh, byte [rax + rcx]
+    test dh, dh
     jz end
     inc rcx
     jmp loop
