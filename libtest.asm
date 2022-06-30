@@ -1,5 +1,6 @@
 section .data
 simple_str: db 'abcdefg', 0
+buffer: times 10 db 0
 
 section .text
 %include "lib.inc"
@@ -33,6 +34,14 @@ call print_newline
 call read_char
 mov rdi, rax
 call print_char
+call print_newline
+
+
+mov rdi, buffer
+mov rsi, 3
+call read_string
+mov rdi, buffer
+call print_string
 call print_newline
 
 mov rdi, 0

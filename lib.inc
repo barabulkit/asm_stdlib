@@ -1,5 +1,5 @@
 section .data
-digits: db '0123456789'
+digits: db '0123456789', 0
 minus: db '-'
 newline: db 0xA
 
@@ -78,15 +78,22 @@ print_loop:
 read_char:
     push rbp
     mov rbp, rsp
-    sub rsp, 1
+    sub rsp, 2
     lea rsi, [rbp - 1]
     mov rax, 0
     mov rdi, 0
-    mov rdx, 1
+    mov rdx, 2
     syscall
     lea rax, [rbp - 1]
-    mov rsp, rbp
-    pop rbp
+    leave
+    ret
+
+read_string:
+    mov rdx, rsi
+    lea rsi, [rdi]
+    mov rax, 0
+    mov rdi, 0
+    syscall
     ret
 
 exit:
