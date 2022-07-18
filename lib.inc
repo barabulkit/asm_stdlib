@@ -78,11 +78,11 @@ print_loop:
 read_char:
     push rbp
     mov rbp, rsp
-    sub rsp, 2
+    sub rsp, 1
     lea rsi, [rbp - 1]
     mov rax, 0
     mov rdi, 0
-    mov rdx, 2
+    mov rdx, 1
     syscall
     lea rax, [rbp - 1]
     leave
@@ -94,6 +94,26 @@ read_string:
     mov rax, 0
     mov rdi, 0
     syscall
+    ret
+
+parse_uint:
+    mov rsi, rdi
+    call strlen
+    mov rbx, rax
+    mov rax, 1
+    mov rdx, 0
+parse_loop:
+    dec rbx
+    cmp rbx, 0
+    jl parse_end
+    mov cl, byte [rsi + rbx]
+    sub rcx, 0x30
+    imul rcx, rax
+    add rdx, rcx
+    imul rax, 10
+    jmp parse_loop
+parse_end:
+    mov rax, rdx
     ret
 
 exit:
